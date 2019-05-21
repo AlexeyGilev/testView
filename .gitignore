@@ -1,0 +1,6 @@
+build
+node_modules
+tests/config.json
+*.log
+.idea
+.vscode

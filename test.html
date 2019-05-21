@@ -1,0 +1,38 @@
+<html>
+<head>
+    <script src="polyfill.min.js"></script>
+    <script src="jszip.min.js"></script>
+    <script src="docx-preview.js"></script>
+    <meta charset="utf-8">
+    <title>Тег DIV</title>
+    <style type="text/css">
+    .block1 { 
+    }
+    .block2 { 
+        width: 200px; 
+        background: #ccc;
+        padding: 5px;
+        padding-right: 20px; 
+        border: solid 1px black; 
+    }
+    </style> 
+</head>
+<body>
+	<input id="files" type="file" id="files" accept=".docx"/>    <button id="loadButton">load</button>
+    <div id="doc" class="block1">
+    </div>
+
+    <script>
+
+        document.getElementById("loadButton").addEventListener("click", loadDocx);
+
+        function loadDocx() {
+            var file = document.getElementById("files").files[0];
+            var container = document.getElementById("doc");
+            
+            docx.renderAsync(file, container, null, { debug: true })
+                    .then(function(x){ console.log(x); });
+        }
+    </script>
+</body>
+</html>

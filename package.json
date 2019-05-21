@@ -1,0 +1,20 @@
+{
+  "name": "testView",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "awesome-unoconv": "^1.0.1",
+    "child_process": "^1.0.2",
+    "docx-pdf": "^0.0.1",
+    "office-converter": "^1.0.2",
+    "unoconv": "^0.1.2",
+    "unoconv-promise": "^1.0.6",
+    "unoconv2": "^1.0.0"
+  }
+}
