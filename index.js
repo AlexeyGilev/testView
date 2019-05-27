@@ -1,11 +1,39 @@
-var unoconv = require('unoconv');
+var unoconv = require('unoconv2');
 var docxConverter = require('docx-pdf');
-var fs = require('fs');*/
+var fs = require('fs');
+var childProcess = require('child_process')
+const Excel = require('exceljs');
 
-unoconv.convert('/OLAP.docx', 'pdf', {bin: 'unoconv'},function (err, result) {
-	// result is returned as a Buffer
-	fs.writeFile('converted.pdf', result);
-});
+
+var workbook = new Excel.Workbook();
+workbook.xlsx.readFile('test.xlsx')
+  .then(function() {
+    workbook.worksheets.forEach(function(worksheet) {
+      worksheet.pageSetup.fitToPage = true;
+    });
+    workbook.xlsx.writeFile('test2.xlsx')
+      .then(function() {
+        console.log('write done')
+        unoconv.convert(workbook, 'pdf', {bin: 'unoconv.cmd'}, function (err, result) {
+          fs.writeFileSync('convertedWithMutated.pdf', result);
+        });
+        
+        /*unoconv.convert('test.xlsx', 'pdf', {bin: 'unoconv.cmd'}, function (err, result) {
+          fs.writeFileSync('convertedWithoutMutated.pdf', result);
+        });*/
+      });
+  });
+
+
+
+
+
+
+/*var args = [
+  '-fpdf', 'OLAP.docx'
+];
+
+childProcess.spawn('unoconv.cmd', args)*/
 
 //не unoconv, но работает :D
 /*docxConverter('C:/Projects/testView/OLAP.docx','./output.pdf',function(err,result){
@@ -35,11 +63,11 @@ unoconv
   });*/
 
 
-  //const unoconv = require("unoconv-promise");
+  /*const unoconv = require("unoconv-promise");
 
-  /*unoconv
+  unoconv
   .run({
-    bin: 'C:/Program Files (x86)/unoconv-0.8.2/unoconv',
+    bin: "unoconv.cmd",
     file: "./OLAP.docx",
     output: "./temp.pdf",
     export: "PageRange=1-2"
@@ -63,3 +91,51 @@ unoconv
   .catch(e => {
     throw e;
   });*/
+
+
+  //msoffice
+  /*var msopdf = require('node-msoffice-pdf');
+
+
+  msopdf(null, function(error, office) { 
+ 
+    if (error) { 
+      console.log("Init failed", error);
+      return;
+    }
+ 
+ 
+   office.word({input: "OLAP.docx", output: "outfile.pdf"}, function(error, pdf) { 
+      if (error) { 
+           console.log("Woops", error);
+       } else { 
+           console.log("Saved to", pdf);
+       }
+   });
+ 
+ 
+   office.excel({input: "infile.xlsx", output: "outfile.pdf"}, function(error, pdf) { 
+       if (error) { 
+           console.log("Woops", error);
+       } else { 
+           console.log("Saved to", pdf);
+       }
+   });
+ 
+   office.close(null, function(error) { 
+       if (error) { 
+           console.log("Woops", error);
+       } else { 
+           console.log("Finished & closed");
+       }
+   });
+});*/
+
+
+
+/*var office2pdf = require(office2pdf),
+  generatePdf = office2pdf.generatePdf;
+
+generatePdf('OLAP.docx', function(err, result) {
+  console.log(result);
+});*/
